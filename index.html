@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GPG 金鑰原理與實踐</title>
-    <link rel="stylesheet" href="css/reset.css">
+    <!-- <link rel="stylesheet" href="css/reset.css"> -->
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="css/theme/wx.css" id="theme">
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/monokai.css">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
 </head>
 
@@ -25,37 +25,94 @@
             <section data-markdown>
                 ## 你可能會問：
 
+                ---
                 - 什麼是 GPG?
                 - 為什麼我們需要 GPG?
+            </section>
+            <section data-markdown>
+                ## 概念
+
+                1. 公钥加密
+                2. 数字签名
+                3. 信任网
+                4. 安全边界
+            </section>
+            <section data-markdown>
+                ### 公鑰加密
+
+                - 密鑰與公鑰
+                - 公钥不能得出密钥
+                - 发出讯息者以接收讯息者的公钥将讯息加密
+                - 接收者以自己的密钥解密
+                - **密钥必须保持秘密**
+                <!-- .element: class="fragment" -->
+
+                千萬不要將你的密鑰在網路上傳輸，另外別在 telnet 上使用 GnuPG
+                <!-- .element: class="fragment" -->
+            </section>
+            <section data-markdown>
+                ### 数字签名
+
+                概念：证明一则讯息确实是宣称发出讯息的人所发
+
+                <p class="fragment">得到讯息者可以确认：讯息来自该发出讯息者，而且在传递过程中其内容没有改变</p> <!-- .element: class="fragment" -->
+                
+
+                - 一个数字签名是通过密钥和讯息本身而得来
+                - 讯息可以通过发出讯息者的公钥来验证
+            </section>
+            <section data-markdown>
+                ### 信任网
+
             </section>
             <section data-markdown></section>
         </div>
     </div>
+    <script src="./lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
 
-		<script>
+    <script>
+        // More info https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
 
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				center: true,
-				hash: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true },
-					{ src: 'plugin/search/search.js', async: true },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
-
-		</script>
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            dependencies: [{
+                    src: 'plugin/markdown/marked.js',
+                    condition: function () {
+                        return !!document.querySelector('[data-markdown]');
+                    }
+                },
+                {
+                    src: 'plugin/markdown/markdown.js',
+                    condition: function () {
+                        return !!document.querySelector('[data-markdown]');
+                    }
+                },
+                {
+                    src: 'plugin/highlight/highlight.js',
+                    async: true
+                },
+                {
+                    src: 'plugin/search/search.js',
+                    async: true
+                },
+                {
+                    src: 'plugin/zoom-js/zoom.js',
+                    async: true
+                },
+                {
+                    src: 'plugin/notes/notes.js',
+                    async: true
+                }
+            ]
+        });
+    </script>
 </body>
 
 </html>
