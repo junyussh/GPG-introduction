@@ -33,9 +33,9 @@
                 - 为什么我们需要 GPG?
             </section>
             <section data-markdown>
-                ## 什麼是 GPG
+                ## 什么是 GPG
 
-                全名為 [GNU Privacy Guard (GnuPG)](https://gnupg.org/)，於 1997 年自由軟體基金會以 GPL 協議釋出的開源免費加、解密工具，兼容 OpenPGP 標準。
+                全名为 [GNU Privacy Guard (GnuPG)](https://gnupg.org/)，于 1997 年自由软体基金会以 GPL 协议释出的开源免费加、解密工具，兼容 OpenPGP 标准。
             </section>
             <section data-markdown>
                 ## 概念
@@ -120,7 +120,7 @@
 
                 ---
 
-                列出此电脑目前保存的公钥，Key ID 为 fingerprint 末 8 位，可用 `gpg --list-keys` 指令查看，後文以 `keyid` 代称。
+                列出此电脑目前保存的公钥，Key ID 为 fingerprint 末 8 位，可用 `gpg --list-keys` 指令查看，后文以 `keyid` 代称。
 
                 ```bash=
                 $ gpg --list-keys # 显示保存的公钥
@@ -129,11 +129,11 @@
                 ```
             </section>
             <section data-markdown>
-                ### 撤銷憑證
+                ### 撤销凭证
 
                 ---
 
-                建議產生完金鑰就去建立一張撤銷憑證，當金鑰不被信任時可以利用這張去撤銷你的金鑰，产生的 `revoke.asc` 请像密钥一样妥善保管。
+                建议产生完金钥就去建立一张撤销凭证，当金钥不被信任时可以利用这张去撤销你的金钥，产生的 `revoke.asc` 请像密钥一样妥善保管。
 
                 ```bash=
                 $ gpg --gen-revoke -o revoke.asc keyid # Example 是你的名字
@@ -156,7 +156,7 @@
 
                 ---
 
-                用户可以用自己的公钥加密重要文件，而**只能透过用户自己的密钥解密**，加密完後會產生一個 `test.txt.gpg` 文件。
+                用户可以用自己的公钥加密重要文件，而**只能透过用户自己的密钥解密**，加密完后会产生一个 `test.txt.gpg` 文件。
                 ```bash=
                 $ gpg -e test.txt # 将 test.txt 加密
                 $ gpg -r keyid -e test.txt # -r 参数指定使用者的公钥
@@ -167,7 +167,7 @@
 
                 ---
 
-                输入用户密钥後输出解密结果，不加 `-o` 指定输出文件会默认在终端机内显示解密结果。
+                输入用户密钥后输出解密结果，不加 `-o` 指定输出文件会默认在终端机内显示解密结果。
 
                 ```bash=
                 $ gpg -d test.txt.gpg
@@ -201,7 +201,7 @@
             <section data-markdown>
                 ## Demo Time
 
-                讲了这麽多，我想大家可能还是不明白 GPG 的用法，不如带亲身体验一下 GPG 的强大之处。
+                讲了这么多，我想大家可能还是不明白 GPG 的用法，不如带亲身体验一下 GPG 的强大之处。
             </section>
 
             <section data-markdown>
@@ -221,8 +221,8 @@
 
                 ### Reference
 
-                - [玩具烏托邦: 使用 GnuPG 建立你的 PGP 金鑰，讓別人能夠私密寄信給你](https://newtoypia.blogspot.com/2013/12/gnupg-pgp.html)
-                - [GPG 官方引導文件(中文版)](https://gnupg.org/howtos/zh/index.html)
+                - [玩具乌托邦: 使用 GnuPG 建立你的 PGP 金钥，让别人能够私密寄信给你](https://newtoypia.blogspot.com/2013/12/gnupg-pgp.html)
+                - [GPG 官方引导文件(中文版)](https://gnupg.org/howtos/zh/index.html)
                 - [GPG(pgp)加解密中文完整教程 | Alex's Station](http://www.alexgao.com/2009/01/24/gpg/)
             </section>
         </div>
