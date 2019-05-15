@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GPG 金鑰原理與實踐</title>
+    <title>GPG 金钥原理与实践</title>
     <!-- <link rel="stylesheet" href="css/reset.css"> -->
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/wx.css" id="theme">
@@ -19,15 +19,23 @@
     <div class="reveal">
         <div class="slides">
             <section data-markdown>
-                # GPG 金鑰原理與實踐
-                由 Chun Yu 建立
+                # GPG 金钥原理与实践
+
+                License: *GPL v2*
+
+                Github: [*junyussh/GPG-introduce*](https://github.com/junyussh/GPG-introduce.git)
             </section>
             <section data-markdown>
-                ## 你可能會問：
+                ## 你可能会问：
 
                 ---
-                - 什麼是 GPG?
-                - 為什麼我們需要 GPG?
+                - 什么是 GPG?
+                - 为什么我们需要 GPG?
+            </section>
+            <section data-markdown>
+                ## 什麼是 GPG
+
+                全名為 [GNU Privacy Guard (GnuPG)](https://gnupg.org/)，於 1997 年自由軟體基金會以 GPL 協議釋出的開源免費加、解密工具，兼容 OpenPGP 標準。
             </section>
             <section data-markdown>
                 ## 概念
@@ -38,25 +46,29 @@
                 4. 安全边界
             </section>
             <section data-markdown>
-                ### 公鑰加密
+                ### 公钥加密
 
-                - 密鑰與公鑰
+                ---
+
+                - 密钥与公钥
                 - 公钥不能得出密钥
                 - 发出讯息者以接收讯息者的公钥将讯息加密
                 - 接收者以自己的密钥解密
                 - **密钥必须保持秘密**
                 <!-- .element: class="fragment" -->
 
-                千萬不要將你的密鑰在網路上傳輸，另外別在 telnet 上使用 GnuPG
+                千万不要将你的密钥在网路上传输，另外别在 telnet 上使用 GnuPG
                 <!-- .element: class="fragment" -->
             </section>
             <section data-markdown>
                 ### 数字签名
 
-                概念：证明一则讯息确实是宣称发出讯息的人所发
+                ---
+
+                概念：证明一则讯息确实是宣称发出讯息的人所发。
 
                 <p class="fragment">得到讯息者可以确认：讯息来自该发出讯息者，而且在传递过程中其内容没有改变</p> <!-- .element: class="fragment" -->
-                
+
 
                 - 一个数字签名是通过密钥和讯息本身而得来
                 - 讯息可以通过发出讯息者的公钥来验证
@@ -64,23 +76,155 @@
             <section data-markdown>
                 ### 信任网络
 
+                ---
+
                 简介：信任网络是密码学中的一个概念，可以用来验证一个公钥的持有者身份。
 
-                - 为了解决可能的虚假身份入侵，GnuPG通过对公共钥匙签名来分辨。当你信任给这把钥匙签名的人时，你认为这把钥匙是可信的，并确信这把钥匙确实属于拥有相应用户身份的人。
-                
+                - 为了解决可能的虚假身份入侵，GnuPG 通过对公共钥匙签名来分辨。当你信任给这把钥匙签名的人时，你认为这把钥匙是可信的，并确信这把钥匙确实属于拥有相应用户身份的人。
+
                 - 信任网的要点是“不依赖认证机构，而是建立每个人之间的信任关系”。换言之，就是能够自己决定要信任哪些公钥。
             </section>
-			<section data-markdown>
+            <section data-markdown>
                 ### 安全边界
+
+                ---
 
                 简介：边界防护的安全理念，边界防护技术等。
 
                 - 如果你有数据想要保密，你所需做的远不止选择加密算法这一件事。你应该统筹考虑你的系统安全。
-                
-                - 此时使用PGP是很好的选择，一般我们认为PGP是安全的。但PGP也并不能做到完全“无法破译”。
-				
+
+                - 此时使用 PGP 是很好的选择，一般我们认为 PGP 是安全的。但 PGP 也并不能做到完全“无法破译”。
+
             </section>
-            <section data-markdown></section>
+            <section data-markdown>
+                ## 使用
+
+                以下介绍 GPG 核心功能的使用
+
+                - 金钥产生
+                - 加解密讯息
+                - 数位签证
+            </section>
+            <section data-markdown>
+                ### 产生一组金钥
+
+                ---
+                此动作会分别产生公钥及私钥(密钥)。
+
+                ```bash=
+                $ gpg --gen-key
+                ```
+            </section>
+            <section data-markdown>
+                ### 管理金钥
+
+                ---
+
+                列出此电脑目前保存的公钥，Key ID 为 fingerprint 末 8 位，可用 `gpg --list-keys` 指令查看，後文以 `keyid` 代称。
+
+                ```bash=
+                $ gpg --list-keys # 显示保存的公钥
+                $ gpg --fingerprint # 列出金钥及其指纹
+                $ gpg -K # 显示已保存的密钥
+                ```
+            </section>
+            <section data-markdown>
+                ### 撤銷憑證
+
+                ---
+
+                建議產生完金鑰就去建立一張撤銷憑證，當金鑰不被信任時可以利用這張去撤銷你的金鑰，产生的 `revoke.asc` 请像密钥一样妥善保管。
+
+                ```bash=
+                $ gpg --gen-revoke -o revoke.asc keyid # Example 是你的名字
+                ```
+            </section>
+            <section data-markdown>
+                ### 公钥服务器
+
+                ---
+
+                如果收件人把公钥上传到金钥服务器，可以直接在服务器上搜寻。
+
+                ```bash
+                $ gpg --search-keys torvalds@kernel.org # 用 Email 搜寻
+                $ gpg --send-keys 24AB50C1 # 把自己的公钥传到金钥服务器
+                ```
+            </section>
+            <section data-markdown>
+                ### 加密讯息
+
+                ---
+
+                用户可以用自己的公钥加密重要文件，而**只能透过用户自己的密钥解密**，加密完後會產生一個 `test.txt.gpg` 文件。
+                ```bash=
+                $ gpg -e test.txt # 将 test.txt 加密
+                $ gpg -r keyid -e test.txt # -r 参数指定使用者的公钥
+                ```
+            </section>
+            <section data-markdown>
+                ### 解密
+
+                ---
+
+                输入用户密钥後输出解密结果，不加 `-o` 指定输出文件会默认在终端机内显示解密结果。
+
+                ```bash=
+                $ gpg -d test.txt.gpg
+                $ gpg -r keyid -d test.txt.gpg # 指定要解密的用户身份
+                $ gpg -o decrypt.txt -r keyid -d test.txt.gpg # 将解密内容写入到 decrypt.txt
+                ```
+            </section>
+            <section data-markdown>
+                ### 加解密流程
+
+                ---
+
+                ![GPG 加解密流程](./img/gpgprocess.jpg)
+            </section>
+            <section data-markdown>
+                ### 数字签名
+
+                ---
+
+                当寄件者向你发送文件，可以利用寄件者公钥验证是否为寄件者本人所寄，签名产生使用用户密钥加密。
+
+                主要分为两种签证方式：文本签名和分离式签名，文本签名会将签名资讯写入文件中，分离式签名则将签名资讯独立成一个文件。
+
+                ```bash
+                $ gpg --clearsign test.txt # 文本签名产生 test.txt.asc
+                $ gpg -o test.sig -ab test.txt # 分离式签名
+                $ gpg -u F0C17F5F -o test.sig -ab test.txt # 指定私钥签章
+                $ gpg --verify test.sig test.txt # 验证签名
+                ```
+            </section>
+            <section data-markdown>
+                ## Demo Time
+
+                讲了这麽多，我想大家可能还是不明白 GPG 的用法，不如带亲身体验一下 GPG 的强大之处。
+            </section>
+
+            <section data-markdown>
+                ## Questions?
+
+                如果没有就结束了喔。
+            </section>
+            <section data-markdown>
+                ## End
+
+                This slide is released in GPL v2 License, you can view the source code on
+                [Github](https://github.com/junyussh/GPG-introduce).
+
+                The representation is powered by [*Reveal.js*](https://revealjs.com/).
+
+                ---
+
+                ### Reference
+
+                - [玩具烏托邦: 使用 GnuPG 建立你的 PGP 金鑰，讓別人能夠私密寄信給你](https://newtoypia.blogspot.com/2013/12/gnupg-pgp.html)
+                - [GPG 官方引導文件(中文版)](https://gnupg.org/howtos/zh/index.html)
+                - [GPG(pgp)加解密中文完整教程 | Alex's Station](http://www.alexgao.com/2009/01/24/gpg/)
+            </section>
         </div>
     </div>
     <script src="./lib/js/head.min.js"></script>
