@@ -21,7 +21,7 @@
             <section data-markdown>
                 # GPG 金钥原理与实践
 
-                License: *GPL v2*
+                License: [*GPL v2*](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
                 Github: [*junyussh/GPG-introduce*](https://github.com/junyussh/GPG-introduce.git)
             </section>
@@ -42,7 +42,7 @@
 
                 1. 公钥加密
                 2. 数字签名
-                3. 信任网
+                3. 信任网路
                 4. 安全边界
             </section>
             <section data-markdown>
@@ -55,10 +55,8 @@
                 - 发出讯息者以接收讯息者的公钥将讯息加密
                 - 接收者以自己的密钥解密
                 - **密钥必须保持秘密**
-                <!-- .element: class="fragment" -->
 
                 千万不要将你的密钥在网路上传输，另外别在 telnet 上使用 GnuPG
-                <!-- .element: class="fragment" -->
             </section>
             <section data-markdown>
                 ### 数字签名
@@ -67,7 +65,7 @@
 
                 概念：证明一则讯息确实是宣称发出讯息的人所发。
 
-                <p class="fragment">得到讯息者可以确认：讯息来自该发出讯息者，而且在传递过程中其内容没有改变</p> <!-- .element: class="fragment" -->
+                得到讯息者可以确认：讯息来自该发出讯息者，而且在传递过程中其内容没有改变
 
 
                 - 一个数字签名是通过密钥和讯息本身而得来
@@ -95,6 +93,49 @@
 
                 - 此时使用 PGP 是很好的选择，一般我们认为 PGP 是安全的。但 PGP 也并不能做到完全“无法破译”。
 
+            </section>
+            <section data-markdown>
+                ## 安装
+
+                GPG 是跨平台开源的免费软件，接下来教大家如何在各种操作系统安装 GPG。
+            </section>
+            <section data-markdown>
+                ### MacOS
+
+                在 Mac 上可以直接利用 homebrew 安装 GPG 套件。
+
+                ```bash
+                $ brew install gpg
+                ```
+
+                --- 
+
+                ### Windows
+
+                如果你在安装 Git 时选择 Git bash，那里面就有内建 GnuPG 工具了，或是去 [GPG 官网](https://gnupg.org/download/index.html)下载安装包。
+            </section>
+            <section data-markdown>
+                ### Linux
+
+                有些发行版会内建 GPG 工具来验证安装套件，你可以在终端机输入 `gpg` 检查是否已安装 GPG 工具。
+
+                #### Red Hat / CentOS
+
+                ```bash
+                $ sudo yum install gnupg
+                ```
+
+                #### Ubuntu / Debian
+
+                ```bash
+                $ sudo apt-get install gnupg2
+                ```
+
+                #### Arch Linux
+
+                ```bash
+                $ sudo pacman -S gnupg
+                ```
             </section>
             <section data-markdown>
                 ## 使用
@@ -136,7 +177,7 @@
                 建议产生完金钥就去建立一张撤销凭证，当金钥不被信任时可以利用这张去撤销你的金钥，产生的 `revoke.asc` 请像密钥一样妥善保管。
 
                 ```bash=
-                $ gpg --gen-revoke -o revoke.asc keyid # Example 是你的名字
+                $ gpg --gen-revoke -o revoke.asc keyid # keyid 记得替换成自己的
                 ```
             </section>
             <section data-markdown>
@@ -212,10 +253,10 @@
             <section data-markdown>
                 ## End
 
-                This slide is released in GPL v2 License, you can view the source code on
+                This slide is released in [*GPL v2 License*](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html), you can view the source code on
                 [Github](https://github.com/junyussh/GPG-introduce).
 
-                The representation is powered by [*Reveal.js*](https://revealjs.com/).
+                The presentation is powered by [*Reveal.js*](https://revealjs.com/).
 
                 ---
 
